@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
 class BlackJack
-  def run
-  end
+  def run; end
 end
-
-
