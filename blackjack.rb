@@ -12,15 +12,16 @@ class BlackJack
 
   def initialize
     @ui = UserInterface.new
-    @player = Player.new('Player1', start_money: START_MONEY, hidden: false)
-    @dealer = Player.new('Dealer', start_money: START_MONEY)
-    @deck = Deck.new
-    shuffle_deck
     @bets = 0
   end
 
   def run
     ui.show_msg('Welcome to BlackJack Game!')
+    player_name = ui.choose_player_name
+    @player = Player.new(player_name, start_money: START_MONEY, hidden: false)
+    @dealer = Player.new('Dealer', start_money: START_MONEY)
+    @deck = Deck.new
+    shuffle_deck
 
     loop do
       start_game
@@ -30,9 +31,6 @@ class BlackJack
 
   def start_game
     change_deck unless deck.cards_enough?
-
-    puts "cards left #{deck.cards_left}"
-    puts deck.cards_enough?
 
     deal_cards
 

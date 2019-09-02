@@ -22,14 +22,22 @@ class UserInterface
   end
 
   def win_msg(player)
-    puts "#{player.name} wins!!!"
+    puts ">> #{player.name} wins!!!"
   end
 
   def tie_msg
-    puts 'Tie!'
+    puts '>> Tie!'
   end
 
   def deck_shuffle_msg
-    puts 'Deck shuffled'
+    puts '>> Deck shuffled'
+  end
+
+  def choose_player_name
+    loop do
+      puts 'Enter your name:'
+      name = gets.chomp
+      return name if name
+    end
   end
 end
