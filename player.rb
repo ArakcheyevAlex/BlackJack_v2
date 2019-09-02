@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class Player
-  attr_reader :name, :scores
-  attr_accessor :money
+  attr_reader :name, :scores, :money
 
   FULL_HAND_CARDS_LIMIT = 3
 
@@ -46,6 +45,21 @@ class Player
     money.zero?
   end
 
+  def spend_money(value)
+    @money -= value
+  end
+
+  def make_bet(value)
+    spend_money(value)
+  end
+
+  def take_money(value)
+    @money += value
+  end
+
+  alias return_bet take_money
+  alias take_prize take_money
+
   def cards_to_s
     return '***' if hidden?
     return 'no cards' if cards.empty?
@@ -64,4 +78,5 @@ class Player
   private
 
   attr_accessor :cards
+  attr_writer :money
 end

@@ -7,8 +7,9 @@ require './deck'
 
 class BlackJack
   START_MONEY = 100
+  BET = 10
 
-  attr_reader :ui, :player, :dealer, :deck, :bets
+  attr_reader :ui, :player, :dealer, :deck
 
   def initialize
     @ui = UserInterface.new
@@ -24,13 +25,20 @@ class BlackJack
     shuffle_deck
 
     loop do
+      break if no_money_left?
+
       start_game
+
       break unless play_again?
     end
   end
 
   def start_game
     change_deck unless deck.cards_enough?
+
+    make_bets
+
+    show_balance
 
     deal_cards
 
@@ -48,7 +56,11 @@ class BlackJack
   def show_state
     ui.show_player_state(player)
     ui.show_player_state(dealer)
+  end
+
+  def show_balance
     ui.show_balance(player, dealer)
+    ui.show_bets(bets)
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -68,19 +80,23 @@ class BlackJack
     else
       dealer_win
     end
+    show_balance
   end
   # rubocop:enable Metrics/AbcSize
 
   def player_win
     ui.win_msg(player)
+    pay_to_player(player)
   end
 
   def dealer_win
     ui.win_msg(dealer)
+    pay_to_player(dealer)
   end
 
   def tie
     ui.tie_msg
+    money_back
   end
 
   def deal_cards
@@ -106,4 +122,37 @@ class BlackJack
     deck.take_new_deck
     shuffle_deck
   end
+
+  def make_bets
+    dealer.make_bet(BET)
+    player.make_bet(BET)
+    self.bets = BET * 2
+  end
+
+  def pay_to_player(target)
+    target.take_prize(bets)
+    self.bets = 0
+  end
+
+  def money_back
+    dealer.return_bet(bets / 2)
+    player.return_bet(bets / 2)
+    self.bets = 0
+  end
+
+  def no_money_left?
+    if player.no_money?
+      ui.show_msg("#{player.name}: out of money")
+      return true
+    end
+    if dealer.no_money?
+      ui.show_msg('Dealer: out of money')
+      return true
+    end
+    false
+  end
+
+  private
+
+  attr_accessor :bets
 end

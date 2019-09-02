@@ -9,3 +9,6 @@ Style/Documentation:
 
 Metrics/MethodLength:
   Max: 20
+
+Metrics/ClassLength:
+  Enabled: false
