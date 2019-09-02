@@ -15,15 +15,13 @@ class Deck
     cards.pop
   end
 
-  def cards_left?
+  def cards_left
     cards.size
   end
 
   def cards_enough?
-    cards_left? >= ENOUGH_CARDS_FOR_PLAYING
+    cards_left >= ENOUGH_CARDS_FOR_PLAYING
   end
-
-  private
 
   def take_new_deck
     @cards = []
@@ -31,6 +29,8 @@ class Deck
       @cards << Card.new(suit, rank)
     end
   end
+
+  private
 
   attr_reader :cards
 end

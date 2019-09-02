@@ -6,9 +6,9 @@ class Player
 
   FULL_HAND_CARDS_LIMIT = 3
 
-  def initialize(name, money, hidden = true)
+  def initialize(name, start_money:, hidden: true)
     @name = name
-    @money = money
+    @money = start_money
     @cards = []
     @hidden = hidden
     @scores = 0
