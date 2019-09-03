@@ -172,11 +172,11 @@ class BlackJack
 
   def no_money_left?
     if player.no_money?
-      ui.show_msg("#{player.name}: out of money")
+      ui.out_of_money_msg(player.name)
       return true
     end
     if dealer.no_money?
-      ui.show_msg('Dealer: out of money')
+      ui.out_of_money_msg('Dealer')
       return true
     end
     false

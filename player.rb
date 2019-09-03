@@ -13,11 +13,19 @@ class Player
     @scores = 0
   end
 
+  def calculate_scores(new_card)
+    @scores += card_price(new_card)
+  end
+
+  def card_price(card)
+    return 1 if (@scores + card.price > 21) && card.ace?
+
+    card.price
+  end
+
   def take_card(card)
-    card_value = card.price
-    card_value = 1 if (@scores + card_value > 21) && card.ace?
-    @scores += card_value
     cards << card
+    calculate_scores(card)
   end
 
   def drop_cards

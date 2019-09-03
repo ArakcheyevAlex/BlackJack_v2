@@ -33,6 +33,10 @@ class UserInterface
     puts '>> Deck shuffled'
   end
 
+  def out_of_money_msg(player)
+    show_msg("#{player}: out of money")
+  end
+
   def choose_player_name
     loop do
       puts 'Enter your name:'
