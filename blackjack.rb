@@ -18,12 +18,7 @@ class BlackJack
   end
 
   def run
-    ui.show_msg('Welcome to BlackJack Game!')
-    player_name = ui.choose_player_name
-    @player = Player.new(player_name, start_money: START_MONEY, hidden: false)
-    @dealer = Player.new('Dealer', start_money: START_MONEY)
-    @deck = Deck.new
-    shuffle_deck
+    first_setup_game
 
     loop do
       break if no_money_left?
@@ -32,6 +27,15 @@ class BlackJack
 
       break unless play_again?
     end
+  end
+
+  def first_setup_game
+    ui.show_msg('Welcome to BlackJack Game!')
+    player_name = ui.choose_player_name
+    @player = Player.new(player_name, start_money: START_MONEY, hidden: false)
+    @dealer = Player.new('Dealer', start_money: START_MONEY)
+    @deck = Deck.new
+    shuffle_deck
   end
 
   def start_game
