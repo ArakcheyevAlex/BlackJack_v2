@@ -25,7 +25,7 @@ class BlackJack
 
       start_game
 
-      break unless play_again?
+      break unless ui.play_again?
     end
   end
 
@@ -81,12 +81,6 @@ class BlackJack
     return if dealer.scores >= DEALER_SCORES_LIMIT
 
     dealer.take_card(deck.draw_card)
-  end
-
-  def play_again?
-    ui.show_msg "Play again? 'y' or 'n':"
-    answer = gets.chomp
-    answer == 'y'
   end
 
   def show_state

@@ -41,6 +41,12 @@ class UserInterface
     end
   end
 
+  def play_again?
+    show_msg "Play again? 'y' or 'n':"
+    answer = gets.chomp
+    answer == 'y'
+  end
+
   def turn_menu(full_hand)
     puts '1. Stand'
     puts '2. Open cards'
