@@ -54,12 +54,10 @@ class BlackJack
   def setup_game
     change_deck unless deck.cards_enough?
 
+    dealer.hide_cards
     make_bets
-
     show_balance
-
     deal_cards
-
     show_state
   end
 
