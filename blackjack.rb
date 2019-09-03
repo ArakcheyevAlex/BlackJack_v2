@@ -8,6 +8,7 @@ require './deck'
 class BlackJack
   START_MONEY = 100
   BET = 10
+  DEALER_SCORES_LIMIT = 17
 
   attr_reader :ui, :player, :dealer, :deck
 
@@ -34,6 +35,23 @@ class BlackJack
   end
 
   def start_game
+    setup_game
+
+    loop do
+      break if player_turn == :open
+
+      break if game_finished?
+
+      show_state
+
+      dealer_turn
+      show_state
+      break if game_finished?
+    end
+    calculate_result
+  end
+
+  def setup_game
     change_deck unless deck.cards_enough?
 
     make_bets
@@ -43,8 +61,24 @@ class BlackJack
     deal_cards
 
     show_state
+  end
 
-    calculate_result
+  def game_finished?
+    return true if player.full_hand? && dealer.full_hand?
+
+    false
+  end
+
+  def player_turn
+    player_action = ui.turn_menu(player.full_hand?) until player_action
+    player.take_card(deck.draw_card) if player_action == :hit
+    player_action
+  end
+
+  def dealer_turn
+    return if dealer.scores >= DEALER_SCORES_LIMIT
+
+    dealer.take_card(deck.draw_card)
   end
 
   def play_again?

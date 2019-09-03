@@ -40,4 +40,18 @@ class UserInterface
       return name if name
     end
   end
+
+  def turn_menu(full_hand)
+    puts '1. Stand'
+    puts '2. Open cards'
+    puts '3. Hit' unless full_hand
+    puts 'Enter your choice:'
+    choice = gets.chomp.to_i
+    case choice
+    when 1 then return :stand
+    when 2 then return :open
+    when 3 then return :hit
+    else return nil
+    end
+  end
 end
